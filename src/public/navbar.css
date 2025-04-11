@@ -1,0 +1,135 @@
+ .navbar {
+    background-color:  #1e1e1e;
+    padding: 15px 30px;
+    border-bottom: 3px solid #d89f2f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Logo and brand */
+  .navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  
+  .navbar-logo {
+    height: 43px;
+    width: 43px;
+    border-radius: 50%;
+    border: 3px solid #B8860B;
+    object-fit: cover;
+  }
+  
+  .brand-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #d4af37;
+  }
+  
+  .brand-name span {
+    color:  #ffffff;
+  }
+  
+  /* Navigation links */
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    list-style: none;
+  }
+  
+  .nav-link {
+    color:  #ffffff;
+    text-decoration: none;
+    padding: 8px 16px;
+    font-weight: 500;
+  }
+  
+  .nav-link:hover, .nav-link.active {
+    color: #d4af37;
+  }
+  
+  /* Button styles */
+  .auth-buttons {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .btn {
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .btn-outline {
+    background: transparent;
+    border: 2px solid #d4af37;
+    color: #d4af37;
+  }
+  
+  .btn-outline:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+  }
+  
+  .btn-solid {
+    background-color: #d4af37;
+    border: 2px solid #d4af37;
+    color: var(--black);
+  }
+  
+  .btn-solid:hover {
+    background-color: #f2d675;
+  }
+  
+  /* Mobile menu toggle */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 24px;
+    width: 30px;
+    cursor: pointer;
+  }
+  
+  .hamburger span {
+    height: 3px;
+    width: 100%;
+    background-color: #d4af37;
+    border-radius: 3px;
+  }
+  
+  /* Mobile styles */
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+    
+    .navbar-nav {
+      display: none;
+      position: absolute;
+      top: 70px;
+      right: 0;
+      width: 100%;
+      background-color:  #1e1e1e;
+      flex-direction: column;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+    
+    .navbar-nav.active {
+      display: flex;
+    }
+    
+    .auth-buttons {
+      flex-direction: column;
+      width: 80%;
+      margin: 10px auto;
+    }
+  }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/navbar.css" />
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+  <div class="login-container">
+    <form class="login-card" id="signupForm">
+      <h2>Create Account</h2>
+
+      <div class="input-group animated" style="--delay: 0.2s;">
+        <label for="username">Username</label>
+        <input type="text" id="username" required />
+      </div>
+
+      <div class="input-group animated" style="--delay: 0.4s;">
+        <label for="password">Password</label>
+        <input type="password" id="password" required />
+      </div>
+
+      <div class="animated" style="--delay: 0.6s;">
+        <button type="submit">Sign Up</button>
+      </div>
+
+      <p id="response" class="response"></p>
+    </form>
+  </div>
+  <%- include('../partials/footer') %>
+  <script>
+    const form = document.getElementById('signupForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const user = {
+        username: form.username.value,
+        password: form.password.value
+      };
+
+      const res = await fetch('/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+
+      const data = await res.json();
+      document.getElementById('response').innerText = data.message;
+    });
+  </script>
+</body>
+</html>
