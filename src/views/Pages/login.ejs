@@ -40,13 +40,13 @@
     const responseBox = document.getElementById('response');
     
     function showUserUI(username) {
-  const loginBtn = document.getElementById('login-btn');
-  if (loginBtn) {
-    loginBtn.innerText = username;
-  } else {
-    console.warn('Login button not found in DOM.');
-  }
-}
+      const loginBtn = document.getElementById('login-btn');
+      if (loginBtn) {
+        loginBtn.innerText = username;
+      } else {
+        console.warn('Login button not found in DOM.');
+      }
+    }
 
     form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -72,7 +72,7 @@
 
       responseBox.innerText = 'Login Doneee!';
       responseBox.style.color = 'lightgreen';
-      window.location.href = '/api/home';
+      window.location.href = '/home';
     } else {
       responseBox.innerText = `Errrrr ${data.message}`;
       responseBox.style.color = 'pink';

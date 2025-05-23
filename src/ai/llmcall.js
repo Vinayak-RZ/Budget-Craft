@@ -1,7 +1,8 @@
 import { InferenceClient } from "@huggingface/inference";
 import dotenv from 'dotenv';    
 dotenv.config();
-const client = new InferenceClient(process.env.HUGGING_FACE_API_KEY);
+console.log('Huggingfacekey' ,process.env.HUGGING_FACE_API_KEY)
+const client = new InferenceClient("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");
 const chatCompletion = await client.chatCompletion({
     provider: "novita",
     model: "deepseek-ai/DeepSeek-V3-0324",

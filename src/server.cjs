@@ -2,11 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const protectedRoute = require('./routes/protectedRoute.cjs');
 const connectDB = require('./config/db.cjs');
 const authRoutes = require('./routes/authRoutes.cjs');
-const Routes = require('./routes/homeRoute.cjs');
-
+const homeRoutes = require('./routes/homeRoutes.cjs');
+const transactionRoutes = require('./routes/transactionRoutes.cjs');
 let a
 (async () => {
   const { default: message } = await import('./ai/llmcall.js');
@@ -23,10 +22,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(authRoutes);
 app.use('/api',homeRoutes);
-app.use('/api',protectedRoute);
-const transactionRoutes = require('./routes/transactionRoutes.cjs');
 app.use(transactionRoutes);
-app.get('/api/home', (req, res) => {
+app.get('/home', (req, res) => {
   res.render('pages/home',{ currentPage:'home'});
 });
 app.get('/prediction',(req,res)=>{

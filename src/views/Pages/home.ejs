@@ -16,15 +16,15 @@
     <div class="summary">
       <div class="summary-item">
         <h3>Balance</h3>
-        <div class="amount" id="balance">$10.00</div>
+        <div class="amount" id="balance">$00.00</div>
       </div>
       <div class="summary-item">
         <h3>Income</h3>
-        <div class="amount income" id="income">$40.00</div>
+        <div class="amount income" id="income">$00.00</div>
       </div>
       <div class="summary-item">
         <h3>Expenses</h3>
-        <div class="amount expense" id="expenses">$30.00</div>
+        <div class="amount expense" id="expenses">$00.00</div>
       </div>
       <div class="summary-item">
         <h3>Saved</h3>
@@ -127,12 +127,17 @@
       const category = document.getElementById('category').value;
       const amount = parseFloat(document.getElementById('amount').value);
       const date = document.getElementById('date').value;
+
       const token = localStorage.getItem('token');
+      console.log(token)
+      if (!token) {
+        return alert('Please log in to access this page');
+    }
 
       if (!category || !amount || !date) {
         return alert('Please fill all fields');
       }
-
+      console.log("sending req to /api/transactions")
       const res = await fetch('/api/transactions', {
         method: 'POST',
         headers: {
@@ -154,22 +159,48 @@
 
     async function loadDashboardData() {
       const token = localStorage.getItem('token');
-      const res = await fetch('/api/dashboard', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
 
+      const res = await fetch('/api/home', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      
       const data = await res.json();
+      console.log(data);
 
       document.getElementById('balance').textContent = `$${data.balance.toFixed(2)}`;
       document.getElementById('income').textContent = `$${data.income.toFixed(2)}`;
       document.getElementById('expenses').textContent = `$${data.expense.toFixed(2)}`;
       document.getElementById('saved').textContent = `${data.savedPercentage.toFixed(1)}%`;
+      console.log("waiiittt")
+      console.log('Chart Data:', data.chartData);
+      const incomeCategories = data.chartData.income || {};
+      const expenseCategories = data.chartData.expense || {};
 
-      chart.data.labels = Object.keys(data.chartData);
-      // chart.data.labels =['Food','Utils','Others'];
-      chart.data.datasets[0].data = Object.values(data.chartData);
-      // chart.data.datasets[0].data= [10,15,5];
+      const allLabels = [...new Set([
+        ...Object.keys(incomeCategories),
+        ...Object.keys(expenseCategories)
+      ])];
+
+      chart.data.labels = allLabels;
+
+      chart.data.datasets = [
+        {
+          label: 'Income',
+          data: allLabels.map(label => incomeCategories[label] || 0),
+          backgroundColor: '#4cd964'
+        },
+        {
+          label: 'Expense',
+          data: allLabels.map(label => expenseCategories[label] || 0),
+          backgroundColor: '#ff3b30' 
+        }
+      ];
+
       chart.update();
+
     }
 
     window.addEventListener('DOMContentLoaded', loadDashboardData);
